@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export const PAY_TO = process.env.PAY_TO_ADDRESS || "0xDa1Eab46918882f8656a41cF9fCa80e2415369d1";
-export const NETWORK = process.env.NETWORK || "base";
+export const NETWORK = process.env.NETWORK || process.env.X402_NETWORK || "eip155:8453";
 export const DEFAULT_MAX_AMOUNT = process.env.MAX_AMOUNT_ATOMIC || "10000"; // 0.01 USDC (6 decimals)
 
 export function hasValidPayment(req: NextRequest): boolean {
@@ -31,7 +31,7 @@ export function paymentRequiredResponse(
     payTo: PAY_TO,
     extra: {
       name: "grokzilla-x402-services",
-      version: "1.1.0",
+      version: "1.2.0",
       ...extra,
     },
   };
