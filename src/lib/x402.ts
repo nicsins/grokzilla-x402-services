@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const PAY_TO = process.env.PAY_TO_ADDRESS || "0xDa1Eab46918882f8656a41cF9fCa80e2415369d1";
+// Only payTo ever advertised: TREASURY_ADDRESS (PAY_TO_ADDRESS kept as fallback alias).
+export const PAY_TO =
+  process.env.TREASURY_ADDRESS || process.env.PAY_TO_ADDRESS || "0xc22f9CAEBAc37fE72D5142f35f21f6696Ea9Ef69";
+if (!/^0x[0-9a-fA-F]{40}$/.test(PAY_TO) || /^0x0{40}$/.test(PAY_TO)) {
+  throw new Error("TREASURY_ADDRESS must be a non-zero EVM address");
+}
 export const NETWORK = process.env.NETWORK || process.env.X402_NETWORK || "eip155:8453";
 export const DEFAULT_MAX_AMOUNT = process.env.MAX_AMOUNT_ATOMIC || "10000"; // 0.01 USDC (6 decimals)
 
